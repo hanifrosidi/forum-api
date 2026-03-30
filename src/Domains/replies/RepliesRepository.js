@@ -1,6 +1,6 @@
 class RepliesRepository {
   async addReply(replyRegister) {
-    throw new Error("REPLIES_REPOSITORY.METHOD_NOT_IMPLEMENTED");
+    throw new Error("REPLIES_REPOSITORY.METHOD_NOT_IMPLEMENTEDed");
   }
 
   async getRepliesByCommentId(commentId) {
