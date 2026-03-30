@@ -5,6 +5,7 @@ import pool from "../../database/postgres/pool";
 import CommentRepositoryPostgres from "../CommentRepositoryPostgres";
 import AddedComment from "../../../Domains/comments/entities/AddedComment";
 import CommentTableTestHelper from "../../../../tests/CommentTableTestHelper";
+import { nanoid } from "nanoid";
 
 describe("CommentRepository postgres test", () => {
   const cleanDatabase = async () => {
@@ -28,7 +29,7 @@ describe("CommentRepository postgres test", () => {
     it("should throw error add comment with users not added", async () => {
       // Arrange
       const fakeUserId = "user-hack";
-      const threadId = `thread-${Date.now()}`;
+      const threadId = `thread-${nanoid()}`;
       const userId = `user-${Date.now()}`;
       const date = new Date().toISOString();
       const idGenerator = () => Date.now();
@@ -39,7 +40,7 @@ describe("CommentRepository postgres test", () => {
       //   Create user valid example
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       // Create thread valid example
       await ThreadTableTestHelper.addThread({
@@ -71,7 +72,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -104,7 +105,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -137,7 +138,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -166,7 +167,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -197,11 +198,11 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await UsersTableTestHelper.addUser({
         id: "user-test-999",
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -251,11 +252,11 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await UsersTableTestHelper.addUser({
         id: "user-test-999",
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -308,7 +309,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -339,7 +340,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -374,7 +375,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -406,7 +407,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -434,7 +435,7 @@ describe("CommentRepository postgres test", () => {
     it("should throw error if user does't owner comment", async () => {
       // Arrange
       const userId = `user-${Date.now()}`;
-      const ownerComment = "user-owner-123";
+      const ownerComment = `user-${nanoid()}`;
       const threadId = `thread-${Date.now()}`;
       const commentId = `comment-${Date.now()}`;
       const idGenerator = () => Date.now();
@@ -442,21 +443,24 @@ describe("CommentRepository postgres test", () => {
         content: "The thread body is very amazing information for me",
         date: new Date().toISOString(),
       };
+
       await UsersTableTestHelper.addUser({
         id: ownerComment,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
 
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
+
       await ThreadTableTestHelper.addThread({
         id: threadId,
         title: "New Thread For Testing",
         body: "This thread used for checking owner comment authorize",
         owner: userId,
       });
+
       await CommentTableTestHelper.addComment(
         ownerComment,
         threadId,
