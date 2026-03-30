@@ -40,7 +40,7 @@ describe("CommentRepository postgres test", () => {
       //   Create user valid example
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       // Create thread valid example
       await ThreadTableTestHelper.addThread({
@@ -72,7 +72,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -105,7 +105,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -138,7 +138,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -167,7 +167,7 @@ describe("CommentRepository postgres test", () => {
       };
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -198,11 +198,11 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await UsersTableTestHelper.addUser({
         id: "user-test-999",
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -252,11 +252,11 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await UsersTableTestHelper.addUser({
         id: "user-test-999",
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -309,7 +309,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -340,7 +340,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -375,7 +375,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
@@ -407,7 +407,7 @@ describe("CommentRepository postgres test", () => {
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
-        username: `username-${Date.now()}`,
+        username: `username-${nanoid()}`,
       });
       await ThreadTableTestHelper.addThread({
         id: threadId,
