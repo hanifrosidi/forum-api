@@ -32,7 +32,7 @@ jobs:
           PGUSER: ${{ secrets.PGUSER_TEST }}
           PGDATABASE: ${{ secrets.PGDATABASE_TEST }}
           PGPASSWORD: ${{ secrets.PGPASSWORD_TEST }}
-          PGPORT: ${{ secrets.PGPORT_TEST }}
+          PGPORT: ${{ secrets.PGPORT }}
           ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
           REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
           ACCESS_TOKEN_AGE: ${{ secrets.ACCESS_TOKEN_AGE }}
