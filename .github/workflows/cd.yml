@@ -1,0 +1,49 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install cloudflared
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Add SSH config
+        run: |
+          cat >> ~/.ssh/config <<EOF
+          Host myserver
+            HostName ssh_access.hnfrsd.my.id
+            User ubuntu
+            IdentityFile ~/.ssh/id_ed25519
+            ProxyCommand cloudflared access ssh --hostname %h
+          EOF
+
+      - name: Export Cloudflare token
+        run: |
+          echo "CF_ACCESS_CLIENT_ID=${{ secrets.CF_ACCESS_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "CF_ACCESS_CLIENT_SECRET=${{ secrets.CF_ACCESS_CLIENT_SECRET }}" >> $GITHUB_ENV
+
+      - name: Deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no myserver << 'EOF'
+            cd /your/app
+            git pull
+            pm2 restart all
+          EOF
