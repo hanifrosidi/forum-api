@@ -45,5 +45,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no myserver << 'EOF'
             cd /home/ubuntu/forum-api
             git pull
-            /usr/local/bin/pm2 restart all
+
+            source ~/.profile
+            source ~/.bashrc  
           EOF
