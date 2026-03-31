@@ -43,7 +43,7 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no myserver << 'EOF'
-            cd /your/app
+            cd /home/ubuntu/forum-api
             git pull
             pm2 restart all
           EOF
