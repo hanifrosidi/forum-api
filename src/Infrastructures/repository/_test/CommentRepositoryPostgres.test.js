@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { describe, afterAll, it, expect, afterEach, beforeEach } from "vitest";
 import ThreadTableTestHelper from "../../../../tests/ThreadTableTestHelper";
 import UsersTableTestHelper from "../../../../tests/UsersTableTestHelper";
@@ -215,9 +216,9 @@ describe("CommentRepository postgres test", () => {
         date: new Date().toISOString(),
       });
       await CommentTableTestHelper.addComment(
-        `user-test-999`,
+        "user-test-999",
         threadId,
-        `comment-new-222`,
+        "comment-new-222",
         {
           content: "I think your car is bad in stoplamp section",
           date: new Date().toISOString(),
@@ -269,9 +270,9 @@ describe("CommentRepository postgres test", () => {
         date: new Date().toISOString(),
       });
       await CommentTableTestHelper.addComment(
-        `user-test-999`,
+        "user-test-999",
         threadId,
-        `comment-new-222`,
+        "comment-new-222",
         {
           content: "I think your car is bad in stoplamp section",
           date: new Date().toISOString(),
@@ -305,7 +306,7 @@ describe("CommentRepository postgres test", () => {
       const userId = `user-${Date.now()}`;
       const threadId = `thread-${Date.now()}`;
       const commentId = `comment-${Date.now()}`;
-      const fakeCommandId = `comment-bad-22`;
+      const fakeCommandId = "comment-bad-22";
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
@@ -371,7 +372,7 @@ describe("CommentRepository postgres test", () => {
       const userId = `user-${Date.now()}`;
       const threadId = `thread-${Date.now()}`;
       const commentId = `comment-${Date.now()}`;
-      const fakeThreadId = `thread-fake-77`;
+      const fakeThreadId = "thread-fake-77";
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,
@@ -403,7 +404,6 @@ describe("CommentRepository postgres test", () => {
       const userId = `user-${Date.now()}`;
       const threadId = `thread-${Date.now()}`;
       const commentId = `comment-${Date.now()}`;
-      const fakeThreadId = `thread-fake-77`;
       const idGenerator = () => Date.now();
       await UsersTableTestHelper.addUser({
         id: userId,

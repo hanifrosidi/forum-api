@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 class CommentDetail {
   constructor(payload) {
     this._verifyPayload(payload[0]);

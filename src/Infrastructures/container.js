@@ -35,6 +35,9 @@ import AddedReplyUseCase from "../Applications/use_case/reply/AddedReplyUseCase.
 import RepliesRepository from "../Domains/replies/RepliesRepository.js";
 import RepliesRepositoryPostgres from "./repository/RepliesRepositoryPostgres.js";
 import DeleteReplyUseCase from "../Applications/use_case/reply/DeleteReplyUseCase.js";
+import LikeOrDislikeCommentUseCase from "../Applications/use_case/likes/LikeOrDislikeCommentUseCase.js";
+import CommentLikeRepository from "../Domains/likes/CommentLikesRepository.js";
+import CommentLikeRepositoryPostgres from "./repository/LikeRepositoryPostgres.js";
 
 // creating container
 const container = createContainer();
@@ -120,6 +123,20 @@ container.register([
   {
     key: RepliesRepository.name,
     Class: RepliesRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        },
+        {
+          concrete: nanoid,
+        },
+      ],
+    },
+  },
+  {
+    key: CommentLikeRepository.name,
+    Class: CommentLikeRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -237,6 +254,10 @@ container.register([
           name: "repliesRepository",
           internal: RepliesRepository.name,
         },
+        {
+          name: "commentLikeRepository",
+          internal: CommentLikeRepository.name,
+        },
       ],
     },
   },
@@ -320,6 +341,27 @@ container.register([
         {
           name: "repliesRepository",
           internal: RepliesRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: LikeOrDislikeCommentUseCase.name,
+    Class: LikeOrDislikeCommentUseCase,
+    parameter: {
+      injectType: "destructuring",
+      dependencies: [
+        {
+          name: "threadRepository",
+          internal: ThreadRepository.name,
+        },
+        {
+          name: "commentRepository",
+          internal: CommentRepository.name,
+        },
+        {
+          name: "commentLikeRepository",
+          internal: CommentLikeRepository.name,
         },
       ],
     },

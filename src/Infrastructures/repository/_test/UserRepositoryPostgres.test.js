@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, vi } from "vitest";
+import { afterAll, afterEach, describe, expect, it } from "vitest";
 import UsersTableTestHelper from "../../../../tests/UsersTableTestHelper.js";
 import InvariantError from "../../../Commons/exceptions/InvariantError.js";
 import RegisterUser from "../../../Domains/users/entities/RegisterUser.js";
@@ -19,7 +19,7 @@ describe("UserRepositoryPostgres", () => {
   describe("verifyAvailableUsername function", () => {
     it("should throw InvariantError when username not available", async () => {
       // Arrange
-      const userId = "user-" + nanoid();
+      const userId = `user-${nanoid()}`;
       const username = `username-${Date.now()}`;
 
       await UsersTableTestHelper.addUser({ id: userId, username: username });
@@ -34,7 +34,7 @@ describe("UserRepositoryPostgres", () => {
 
     it("should not throw InvariantError when username available", async () => {
       // Arrange
-      const userId = "user-" + nanoid();
+      const userId = `user-${nanoid()}`;
       const username = `username-${Date.now()}`;
       const usernameAvailable = `username-${nanoid()}`;
 
@@ -112,7 +112,7 @@ describe("UserRepositoryPostgres", () => {
     it("should return username password when user is found", async () => {
       // Arrange
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
-      const userId = "user-" + Date.now();
+      const userId = `user-${Date.now()}`;
       await UsersTableTestHelper.addUser({
         id: userId,
         username: "dicoding",
@@ -139,7 +139,7 @@ describe("UserRepositoryPostgres", () => {
 
     it("should return user id correctly", async () => {
       // Arrange
-      const idUser = "user-" + Date.now();
+      const idUser = `user-${Date.now()}`;
 
       await UsersTableTestHelper.addUser({
         id: idUser,

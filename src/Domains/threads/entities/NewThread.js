@@ -1,5 +1,3 @@
-import ClientError from "../../../Commons/exceptions/ClientError.js";
-
 class NewThread {
   constructor(payload) {
     this._verifyPayload(payload);

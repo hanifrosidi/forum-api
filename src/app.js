@@ -8,6 +8,7 @@ const start = async () => {
   const { host, port } = config.app;
 
   app.listen(port, host, () => {
+    // eslint-disable-next-line no-undef
     console.log(`server start at http://${host}:${port}`);
   });
 };

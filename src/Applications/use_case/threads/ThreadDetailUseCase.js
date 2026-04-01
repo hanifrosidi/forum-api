@@ -3,10 +3,16 @@ import CommentDetail from "../../../Domains/comments/entities/CommentDetail.js";
 import ThreadDetail from "../../../Domains/threads/entities/ThreadDetail.js";
 
 class ThreadDetailUseCase {
-  constructor({ threadRepository, commentRepository, repliesRepository }) {
+  constructor({
+    threadRepository,
+    commentRepository,
+    repliesRepository,
+    commentLikeRepository,
+  }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._replyRepository = repliesRepository;
+    this._likeRepository = commentLikeRepository;
   }
 
   async execute(threadId) {
@@ -18,6 +24,9 @@ class ThreadDetailUseCase {
 
       const commentReply =
         await this._replyRepository.getRepliesByThreadId(threadId);
+
+      const likeComment =
+        await this._likeRepository.getLikesByThreadId(threadId);
 
       if (threadDetail) {
         new ThreadDetail(threadDetail);
@@ -34,6 +43,9 @@ class ThreadDetailUseCase {
         content: comment.is_delete
           ? "**komentar telah dihapus**"
           : comment.content,
+        likeCount: likeComment.filter(
+          (likeComment) => likeComment.comment === comment.id,
+        ).length,
         replies: commentReply
           .filter((reply) => reply.comment === comment.id)
           .map((reply) => ({

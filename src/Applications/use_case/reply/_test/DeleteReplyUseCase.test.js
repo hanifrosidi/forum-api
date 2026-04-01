@@ -1,4 +1,4 @@
-import { describe, expect } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import RepliesRepository from "../../../../Domains/replies/RepliesRepository.js";
 import UserRepository from "../../../../Domains/users/UserRepository.js";
 import ThreadRepository from "../../../../Domains/threads/ThreadRepository.js";

@@ -1,6 +1,4 @@
-const {
-  default: pool,
-} = require("../src/Infrastructures/database/postgres/pool");
+import pool from "../src/Infrastructures/database/postgres/pool";
 
 const CommentTableTestHelper = {
   async addComment(userId, threadId, commentId, comment) {

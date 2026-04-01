@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import RepliesTableTestHelper from "../../../../tests/RepliesTableTestHelper";
 import UsersTableTestHelper from "../../../../tests/UsersTableTestHelper";
@@ -28,7 +29,7 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        usernameFake: `fake-user`,
+        usernameFake: "fake-user",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -73,8 +74,8 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        usernameFake: `fake-user`,
-        commentFake: `fake-comment`,
+        usernameFake: "fake-user",
+        commentFake: "fake-comment",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -158,7 +159,7 @@ describe("RepliesRepository postgres test", () => {
     it("should return [] if comment not found", async () => {
       // Arrange
       const dataDummy = {
-        fakeComment: `fake-comment`,
+        fakeComment: "fake-comment",
       };
 
       const idGenerator = () => nanoid();
@@ -238,7 +239,7 @@ describe("RepliesRepository postgres test", () => {
     it("should return [] if thread not found", async () => {
       // Arrange
       const dataDummy = {
-        fakeThread: `fake-thread`,
+        fakeThread: "fake-thread",
       };
 
       const idGenerator = () => nanoid();
@@ -322,7 +323,7 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeReply: `fake-reply`,
+        fakeReply: "fake-reply",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -375,8 +376,8 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeReply: `fake-reply`,
-        fakeOwner: `fake-owner`,
+        fakeReply: "fake-reply",
+        fakeOwner: "fake-owner",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -477,7 +478,7 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeReply: `fake-reply`,
+        fakeReply: "fake-reply",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -530,7 +531,7 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeReply: `fake-reply`,
+        fakeReply: "fake-reply",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -582,8 +583,8 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeComment: `fake-comment`,
-        fakeReply: `fake-reply`,
+        fakeComment: "fake-comment",
+        fakeReply: "fake-reply",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -636,8 +637,8 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeComment: `fake-comment`,
-        fakeReply: `fake-reply`,
+        fakeComment: "fake-comment",
+        fakeReply: "fake-reply",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),
@@ -689,8 +690,8 @@ describe("RepliesRepository postgres test", () => {
         username: `username-${Date.now()}`,
         idThread: `thread-${Date.now()}`,
         idComment: `comment-${Date.now()}`,
-        fakeComment: `fake-comment`,
-        fakeReply: `fake-reply`,
+        fakeComment: "fake-comment",
+        fakeReply: "fake-reply",
         comment: {
           content: "Thread ini sangat bagus",
           date: new Date().toISOString(),

@@ -1,5 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import ThreadRepository from "../../../Domains/threads/ThreadRepository";
+import { describe, it, expect, beforeEach, afterEach, afterAll } from "vitest";
 import ThreadTableTestHelper from "../../../../tests/ThreadTableTestHelper";
 import pool from "../../database/postgres/pool";
 import ThreadRepositoryPostgres from "../ThreadRepositoryPostgres";
@@ -29,7 +28,7 @@ describe("ThreadRepositoryPostgres", () => {
   describe.sequential("checkThreadAvailability test function", () => {
     it("should throw error if thread not found", async () => {
       // Arrange
-      const userId = "user-" + Date.now();
+      const userId = `user-${Date.now()}`;
 
       const resultId = await UsersTableTestHelper.addUser({
         id: userId,
@@ -75,7 +74,7 @@ describe("ThreadRepositoryPostgres", () => {
 
     it("should passed if users is exist", async () => {
       // Arrange
-      const userId = "user-" + Date.now();
+      const userId = `user-${Date.now()}`;
       const fakeIdGenerator = () => Date.now();
 
       const resultId = await UsersTableTestHelper.addUser({
@@ -101,7 +100,7 @@ describe("ThreadRepositoryPostgres", () => {
   describe.sequential("getThreadById test function", () => {
     it("should throw error if thread not found", async () => {
       // Arrange
-      const userId = "user-" + Date.now();
+      const userId = `user-${Date.now()}`;
       const resultId = await UsersTableTestHelper.addUser({
         id: userId,
         username: `username-${Date.now()}`,
@@ -122,7 +121,7 @@ describe("ThreadRepositoryPostgres", () => {
 
     it("should threadDetail if thread is found", async () => {
       // Arrange
-      const userId = "user-" + Date.now();
+      const userId = `user-${Date.now()}`;
       const resultId = await UsersTableTestHelper.addUser({
         id: userId,
         username: `username-${Date.now()}`,

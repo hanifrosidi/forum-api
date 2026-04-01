@@ -5,10 +5,11 @@ import AuthenticationsTableTestHelper from "../../../../tests/AuthenticationsTab
 import container from "../../container.js";
 import createServer from "../createServer.js";
 import AuthenticationTokenManager from "../../../Applications/security/AuthenticationTokenManager.js";
-import { describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it } from "vitest";
 import ThreadTableTestHelper from "../../../../tests/ThreadTableTestHelper.js";
 import CommentTableTestHelper from "../../../../tests/CommentTableTestHelper.js";
 import RepliesTableTestHelper from "../../../../tests/RepliesTableTestHelper.js";
+import CommentLikeTableHelper from "../../../../tests/CommentLikeTableTestHelper.js";
 
 describe("HTTP server", () => {
   afterAll(async () => {
@@ -16,6 +17,7 @@ describe("HTTP server", () => {
   });
 
   afterEach(async () => {
+    await CommentLikeTableHelper.clearTable();
     await RepliesTableTestHelper.clearTable();
     await CommentTableTestHelper.clearTable();
     await ThreadTableTestHelper.cleanTable();
@@ -390,7 +392,6 @@ describe("HTTP server", () => {
 
     it("should response 400 if bad payload", async () => {
       // Arrange
-
       const app = await createServer(container);
 
       await request(app).post("/users").send({
@@ -490,8 +491,7 @@ describe("HTTP server", () => {
 
     it("should response 404 if not found thread", async () => {
       // Arrange
-      const threadId = `thread-12345`;
-      const threadFake = `fake-thread`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -513,7 +513,7 @@ describe("HTTP server", () => {
 
       // Action
       const response = await request(app)
-        .post(`/threads/xxx/comments`)
+        .post("/threads/xxx/comments")
         .set("Authorization", `Bearer ${accessToken}`);
 
       // Assert
@@ -523,8 +523,7 @@ describe("HTTP server", () => {
 
     it("should response 400 if invalid payload", async () => {
       // Arrange
-      const threadId = `thread-12345`;
-      const threadFake = `fake-thread`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -559,7 +558,7 @@ describe("HTTP server", () => {
 
     it("should response 200 if authenticate thread found and valid payload", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -614,7 +613,7 @@ describe("HTTP server", () => {
 
     it("should response 404 if comment not found", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -641,8 +640,6 @@ describe("HTTP server", () => {
           content: "sebuah comment",
         });
 
-      const commentId = commentResult.body.data.addedComment.id;
-
       // Action
       const response = await request(app)
         .delete(`/threads/${threadId}/comments/xxx`)
@@ -655,7 +652,7 @@ describe("HTTP server", () => {
 
     it("should response 200 if comment found & authenticate", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -711,7 +708,7 @@ describe("HTTP server", () => {
     });
     it("should response 404 if thread not found", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -733,7 +730,7 @@ describe("HTTP server", () => {
 
       // Action
       const response = await request(app)
-        .post(`/threads/xxx/comments/xxx/replies`)
+        .post("/threads/xxx/comments/xxx/replies")
         .set("Authorization", `Bearer ${accessToken}`);
 
       // Assert
@@ -742,7 +739,7 @@ describe("HTTP server", () => {
     });
     it("should response 404 if comment not found", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -774,7 +771,7 @@ describe("HTTP server", () => {
 
     it("should response 400 if bad payload", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -818,7 +815,7 @@ describe("HTTP server", () => {
 
     it("should response 201 if authenticate thread comment found and payload is correct", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -884,7 +881,7 @@ describe("HTTP server", () => {
 
     it("should response 200 if authenticate", async () => {
       // Arrange
-      const threadId = `thread-12345`;
+      const threadId = "thread-12345";
       const app = await createServer(container);
 
       const resultUser = await request(app).post("/users").send({
@@ -933,9 +930,192 @@ describe("HTTP server", () => {
     });
   });
 
+  describe("when PUT /threads/:threadId/comments/:commentId/likes", () => {
+    it("should response 401 if not authenticate", async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      // Action
+      const response = await request(app).put(
+        "/threads/xxx/comments/xxx/likes",
+      );
+
+      // Assert
+      expect(response.status).toEqual(401);
+      expect(response.body.message).toEqual("Missing authentication");
+    });
+
+    it("should response 404 if invalid thread", async () => {
+      // Arrange
+      const threadId = "thread-12345";
+      const fakeThreadId = "fake-thread-123";
+      const app = await createServer(container);
+
+      const resultUser = await request(app).post("/users").send({
+        username: "testing2",
+        password: "rahasia123",
+        fullname: "anonymus",
+      });
+
+      const { id } = resultUser.body.data.addedUser;
+
+      await ThreadTableTestHelper.addThread({ id: threadId, owner: id });
+
+      const responseLogin = await request(app).post("/authentications").send({
+        username: "testing2",
+        password: "rahasia123",
+      });
+
+      const { accessToken } = responseLogin.body.data;
+
+      const commentResult = await request(app)
+        .post(`/threads/${threadId}/comments`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          content: "sebuah comment",
+        });
+
+      const commentId = commentResult.body.data.addedComment.id;
+
+      // Action
+      const response = await request(app)
+        .put(`/threads/${fakeThreadId}/comments/${commentId}/likes`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // assert
+      expect(response.status).toEqual(404);
+      expect(response.body.message).toEqual("Thread tidak ditemukan");
+    });
+
+    it("should response 404 if invalid comment", async () => {
+      // Arrange
+      const threadId = "thread-12345";
+      const fakeCommentId = "fake-comment-123";
+      const app = await createServer(container);
+
+      const resultUser = await request(app).post("/users").send({
+        username: "testing2",
+        password: "rahasia123",
+        fullname: "anonymus",
+      });
+
+      const { id } = resultUser.body.data.addedUser;
+
+      await ThreadTableTestHelper.addThread({ id: threadId, owner: id });
+
+      const responseLogin = await request(app).post("/authentications").send({
+        username: "testing2",
+        password: "rahasia123",
+      });
+
+      const { accessToken } = responseLogin.body.data;
+
+      const commentResult = await request(app)
+        .post(`/threads/${threadId}/comments`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          content: "sebuah comment",
+        });
+
+      // Action
+      const response = await request(app)
+        .put(`/threads/${threadId}/comments/${fakeCommentId}/likes`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // assert
+      expect(response.status).toEqual(404);
+      expect(response.body.message).toEqual("komentar tidak ditemukan");
+    });
+
+    it("like comment should response 200 if thread comment is valid", async () => {
+      // Arrange
+      const threadId = "thread-12345";
+      const app = await createServer(container);
+
+      const resultUser = await request(app).post("/users").send({
+        username: "testing2",
+        password: "rahasia123",
+        fullname: "anonymus",
+      });
+
+      const { id } = resultUser.body.data.addedUser;
+
+      await ThreadTableTestHelper.addThread({ id: threadId, owner: id });
+
+      const responseLogin = await request(app).post("/authentications").send({
+        username: "testing2",
+        password: "rahasia123",
+      });
+
+      const { accessToken } = responseLogin.body.data;
+
+      const commentResult = await request(app)
+        .post(`/threads/${threadId}/comments`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          content: "sebuah comment",
+        });
+
+      const commentId = commentResult.body.data.addedComment.id;
+
+      // Action
+      const response = await request(app)
+        .put(`/threads/${threadId}/comments/${commentId}/likes`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // assert
+      expect(response.status).toEqual(200);
+      expect(response.body.status).toEqual("success");
+    });
+
+    it("delete like comment should response 200 if thread comment is valid", async () => {
+      // Arrange
+      const threadId = "thread-12345";
+      const app = await createServer(container);
+
+      const resultUser = await request(app).post("/users").send({
+        username: "testing2",
+        password: "rahasia123",
+        fullname: "anonymus",
+      });
+
+      const { id } = resultUser.body.data.addedUser;
+
+      await ThreadTableTestHelper.addThread({ id: threadId, owner: id });
+
+      const responseLogin = await request(app).post("/authentications").send({
+        username: "testing2",
+        password: "rahasia123",
+      });
+
+      const { accessToken } = responseLogin.body.data;
+
+      const commentResult = await request(app)
+        .post(`/threads/${threadId}/comments`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          content: "sebuah comment",
+        });
+
+      const commentId = commentResult.body.data.addedComment.id;
+      await request(app)
+        .put(`/threads/${threadId}/comments/${commentId}/likes`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // Action
+      const response = await request(app)
+        .put(`/threads/${threadId}/comments/${commentId}/likes`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // assert
+      expect(response.status).toEqual(200);
+      expect(response.body.status).toEqual("success");
+    });
+  });
+
   it("when GET /threads/:threadId", async () => {
     // Arrange
-    const threadId = `thread-12345`;
+    const threadId = "thread-12345";
     const app = await createServer(container);
 
     const resultUser = await request(app).post("/users").send({

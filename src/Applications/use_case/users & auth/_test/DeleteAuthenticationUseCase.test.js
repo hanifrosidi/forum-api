@@ -1,6 +1,6 @@
 import AuthenticationRepository from "../../../../Domains/authentications/AuthenticationRepository.js";
 import DeleteAuthenticationUseCase from "../DeleteAuthenticationUseCase.js";
-import { vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 describe("DeleteAuthenticationUseCase", () => {
   it("should throw error if use case payload not contain refresh token", async () => {
