@@ -207,7 +207,7 @@ describe("LikeOrDislikeComment use case test", () => {
       likeOrDislikeCommentUseCase.execute(owner, params),
     ).resolves.toEqual({
       commentId: params.commentId,
-      action: "delete-like",
+      action: "delete",
       threadId: params.threadId,
     });
   });
