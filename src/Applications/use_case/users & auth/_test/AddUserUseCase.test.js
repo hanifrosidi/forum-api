@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import RegisterUser from "../../../../Domains/users/entities/RegisterUser.js";
 import RegisteredUser from "../../../../Domains/users/entities/RegisteredUser.js";
 import UserRepository from "../../../../Domains/users/UserRepository.js";

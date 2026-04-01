@@ -4,7 +4,7 @@ import AuthenticationTokenManager from "../../../security/AuthenticationTokenMan
 import PasswordHash from "../../../security/PasswordHash.js";
 import LoginUserUseCase from "../LoginUserUseCase.js";
 import NewAuth from "../../../../Domains/authentications/entities/NewAuth.js";
-import { vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 describe("GetAuthenticationUseCase", () => {
   it("should orchestrating the get authentication action correctly", async () => {

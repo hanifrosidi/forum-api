@@ -1,32 +1,37 @@
-import NewAuth from '../NewAuth.js';
+import { describe, expect, it } from "vitest";
+import NewAuth from "../NewAuth.js";
 
-describe('NewAuth entities', () => {
-  it('should throw error when payload not contain needed property', () => {
+describe("NewAuth entities", () => {
+  it("should throw error when payload not contain needed property", () => {
     // Arrange
     const payload = {
-      accessToken: 'accessToken',
+      accessToken: "accessToken",
     };
 
     // Action & Assert
-    expect(() => new NewAuth(payload)).toThrowError('NEW_AUTH.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new NewAuth(payload)).toThrowError(
+      "NEW_AUTH.NOT_CONTAIN_NEEDED_PROPERTY",
+    );
   });
 
-  it('should throw error when payload not meet data type specification', () => {
+  it("should throw error when payload not meet data type specification", () => {
     // Arrange
     const payload = {
-      accessToken: 'accessToken',
+      accessToken: "accessToken",
       refreshToken: 1234,
     };
 
     // Action & Assert
-    expect(() => new NewAuth(payload)).toThrowError('NEW_AUTH.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new NewAuth(payload)).toThrowError(
+      "NEW_AUTH.NOT_MEET_DATA_TYPE_SPECIFICATION",
+    );
   });
 
-  it('should create NewAuth entities correctly', () => {
+  it("should create NewAuth entities correctly", () => {
     // Arrange
     const payload = {
-      accessToken: 'accessToken',
-      refreshToken: 'refreshToken',
+      accessToken: "accessToken",
+      refreshToken: "refreshToken",
     };
 
     // Action

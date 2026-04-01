@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import CommentRepository from "../CommentRepository";
 
 describe("CommentRepository interface", () => {

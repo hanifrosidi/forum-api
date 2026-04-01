@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { describe, expect, it, vi } from "vitest";
 import ThreadRepository from "../../../../Domains/threads/ThreadRepository";
 import CommentRepository from "../../../../Domains/comments/CommentRepository";
@@ -109,6 +110,7 @@ describe("CommentDetail use case", () => {
         content: "komentar pertama nih!",
         date: new Date(),
         likeCount: 0,
+        // eslint-disable-next-line camelcase
         is_delete: true,
       },
     ];

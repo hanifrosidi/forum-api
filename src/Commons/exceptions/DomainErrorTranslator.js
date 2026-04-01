@@ -63,6 +63,12 @@ DomainErrorTranslator._directories = {
   "NEW_REPLIES.NOT_MEET_DATA_TYPE_SPECIFICATION": new InvariantError(
     "payload new reply tidak valid",
   ),
+  "LIKE.NOT_CONTAIN_NEEDED_PROPERTY": new InvariantError(
+    "payload like tidak boleh kosong",
+  ),
+  "LIKE.NOT_MEET_DATA_TYPE_SPECIFICATION": new InvariantError(
+    "payload like tidak valid",
+  ),
 };
 
 export default DomainErrorTranslator;

@@ -1,4 +1,3 @@
-import CommentController from "../comments/controller.js";
 import ThreadsController from "./controller.js";
 import createThreadsRouter from "./routes.js";
 

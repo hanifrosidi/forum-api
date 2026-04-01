@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import AuthorizationError from "../../Commons/exceptions/AuthorizationError.js";
 import NotFoundError from "../../Commons/exceptions/NotFoundError.js";
 import CommentRepository from "../../Domains/comments/CommentRepository.js";
@@ -19,7 +20,7 @@ class CommentRepositoryPostgres extends CommentRepository {
   }
 
   async addComment(userId, threadId, newComment) {
-    const { content, date } = newComment;
+    const { content } = newComment;
 
     const id = `comment-${this._idGenerator()}`;
 

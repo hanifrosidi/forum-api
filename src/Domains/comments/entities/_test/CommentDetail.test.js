@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { describe, expect, it } from "vitest";
 import CommentDetail from "../CommentDetail";
 

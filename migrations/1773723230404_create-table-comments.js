@@ -32,6 +32,7 @@ export const up = (pgm) => {
       notNull: true,
       default: pgm.func("CURRENT_TIMESTAMP"),
     },
+    // eslint-disable-next-line camelcase
     is_delete: {
       type: "BOOLEAN",
       notNull: true,

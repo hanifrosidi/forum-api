@@ -1,9 +1,11 @@
+/* eslint-disable camelcase */
 import { describe, expect, it, vi } from "vitest";
 import ThreadDetailUseCase from "../ThreadDetailUseCase";
 import ThreadRepository from "../../../../Domains/threads/ThreadRepository";
 import CommentRepository from "../../../../Domains/comments/CommentRepository";
 import RepliesRepository from "../../../../Domains/replies/RepliesRepository";
 import ThreadDetail from "../../../../Domains/threads/entities/ThreadDetail";
+import CommentLikeRepository from "../../../../Domains/likes/CommentLikesRepository";
 
 describe("ThreadDetail use case", () => {
   it("should throw error when ThreadDetail validation fails", async () => {
@@ -16,6 +18,7 @@ describe("ThreadDetail use case", () => {
       threadRepository: new ThreadRepository(),
       commentRepository: new CommentRepository(),
       repliesRepository: new RepliesRepository(),
+      commentLikeRepository: new CommentLikeRepository(),
     };
 
     mockRepository.threadRepository.getThreadById = vi.fn(() =>
@@ -27,6 +30,10 @@ describe("ThreadDetail use case", () => {
     );
 
     mockRepository.repliesRepository.getRepliesByThreadId = vi.fn(() =>
+      Promise.resolve(),
+    );
+
+    mockRepository.commentLikeRepository.getLikesByThreadId = vi.fn(() =>
       Promise.resolve(),
     );
 
@@ -53,6 +60,7 @@ describe("ThreadDetail use case", () => {
       threadRepository: new ThreadRepository(),
       commentRepository: new CommentRepository(),
       repliesRepository: new RepliesRepository(),
+      commentLikeRepository: new CommentLikeRepository(),
     };
 
     mockRepository.threadRepository.getThreadById = vi.fn(() =>
@@ -65,6 +73,10 @@ describe("ThreadDetail use case", () => {
 
     mockRepository.repliesRepository.getRepliesByThreadId = vi.fn(() =>
       Promise.resolve(),
+    );
+
+    mockRepository.commentLikeRepository.getLikesByThreadId = vi.fn(
+      () => Promise.resolve,
     );
 
     // Action
@@ -91,6 +103,13 @@ describe("ThreadDetail use case", () => {
           username: "johndoe",
           date: new Date(),
           content: "sebuah comment",
+          likeCount: [
+            {
+              id: "like-1234",
+              comment: "comment-1234",
+              owner: "user-12344",
+            },
+          ],
           replies: [
             {
               id: "reply-1234",
@@ -110,6 +129,7 @@ describe("ThreadDetail use case", () => {
       threadRepository: new ThreadRepository(),
       commentRepository: new CommentRepository(),
       repliesRepository: new RepliesRepository(),
+      commentLikeRepository: new CommentLikeRepository(),
     };
 
     mockRepository.threadRepository.getThreadById = vi.fn(() =>
@@ -124,6 +144,9 @@ describe("ThreadDetail use case", () => {
       Promise.resolve(threadData.comments[0].replies),
     );
 
+    mockRepository.commentLikeRepository.getLikesByThreadId = vi.fn(() =>
+      Promise.resolve(threadData.comments[0].likeCount),
+    );
     // Action
     const useCase = new ThreadDetailUseCase(mockRepository);
 

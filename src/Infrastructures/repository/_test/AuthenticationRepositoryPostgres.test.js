@@ -2,7 +2,7 @@ import InvariantError from "../../../Commons/exceptions/InvariantError.js";
 import AuthenticationsTableTestHelper from "../../../../tests/AuthenticationsTableTestHelper.js";
 import pool from "../../database/postgres/pool.js";
 import AuthenticationRepositoryPostgres from "../AuthenticationRepositoryPostgres.js";
-import { afterAll, afterEach, beforeEach, describe } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("AuthenticationRepository postgres", () => {
   beforeEach(async () => {
